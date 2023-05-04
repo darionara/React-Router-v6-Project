@@ -1,15 +1,13 @@
 import React from 'react';
-
-// import useHistory here.
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const PetDetailsNotFound = () => {
+  
+  // get the navigate function from useNavigate
+  const navigate = useNavigate();
 
-  // get the history object from useHistory()
-  const history = useHistory();
-
-  const goBack = () => {
-    history.goBack();
+  const goHome = () => {
+    navigate('/')
   }
   
   return (
@@ -21,8 +19,8 @@ const PetDetailsNotFound = () => {
         alt=""
       />
       <div className="actions-container">
-        <button className="button" onClick={goBack}>
-          Go Back
+        <button className="button" onClick={goHome}>
+          Go Home
         </button>
       </div>
     </main>
