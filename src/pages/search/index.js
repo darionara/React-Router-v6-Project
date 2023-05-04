@@ -3,34 +3,30 @@ import Hero from '../../components/hero';
 import { getPets } from '../../api/petfinder';
 import Pet from '../../components/pet';
 
-// import useLocation here
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
  
 const SearchPage = () => {
 
-  // Get the search value from useLocation() here
-  const { search } = useLocation();
-
-  const queryParams = useMemo(() => { 
-    return new URLSearchParams(search);
-  }, [search]);
+  // Get searchParams object from useSearchParams
+  const [ searchParams ] = useSearchParams();
+  // Get query parameter using searchParams object
+  const petNameToFind = searchParams.get('name');  
 
   const [pets, setPets] = useState([]);
 
   useEffect(() => {
     async function getPetsData() {
-      const petNameToFind = queryParams.get('name');
       const petsData = await getPets('', petNameToFind);
 
       setPets(petsData);
     }
 
     getPetsData();
-  }, [queryParams]);
+  }, [petNameToFind]);
 
   return (
     <div className="page">
-      <Hero displayText={`Results for ${queryParams.get('name')}`} />
+      <Hero displayText={`Results for ${petNameToFind}`} />
 
       <h3>Pets available for adoption near you</h3>
 
